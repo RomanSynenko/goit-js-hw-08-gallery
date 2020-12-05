@@ -17,7 +17,7 @@ const itemConstructor = ({ preview, original, description }, id) => {
 };
 const createGallery = (item) => { return item.map(itemConstructor).join('') };
 
-// gallery.append();
+
 const onClickGallary = (event) => {
     event.preventDefault();
     if (event.target.nodeName !== 'IMG') {
@@ -27,23 +27,18 @@ const onClickGallary = (event) => {
     const largeImageURL = imageRef.dataset.source;
     const largeImageALT = imageRef.alt;
     const largeImageid = imageRef.dataset.id;
-    largeImageAlt(largeImageALT);
-    largeImageSrc(largeImageURL);
-    largeImageId(largeImageid);
+    largeImage(largeImageURL, largeImageALT, largeImageid);
     lightbox.classList.add('is-open');
     window.addEventListener('keydown', onCloseESC);
     window.addEventListener('keydown', pushKey);
 }
 
-const largeImageSrc = (url) => {
+const largeImage = (url, alt, id) => {
     lightboxImage.src = url;
-};
-const largeImageAlt = (alt) => {
     lightboxImage.alt = alt;
-};
-const largeImageId = (id) => {
     lightboxImage.id = id;
-}
+};
+
 const renderGallery = (item) => gallery.insertAdjacentHTML('afterbegin', item);
 
 const onClickClose = (event) => {
@@ -57,24 +52,19 @@ const onCloseESC = (event) => {
     }
 };
 const pushNextKey = (event) => {
-    if (event.key === 'ArrowRight') {
-        clickRight(event);
-    }
+    clickRight(event);
 }
 const pushPreviousKey = (event) => {
-    if (event.key === 'ArrowLeft') {
-        clickLeft(event);
-    }
+    clickLeft(event);
 }
 const pushKey = (event) => {
-    pushPreviousKey(event);
-    pushNextKey(event);
+    if (event.key === 'ArrowLeft') { pushPreviousKey(event); }
+    if (event.key === 'ArrowRight') { pushNextKey(event); }
 };
 
 const clearAttribute = () => {
-    largeImageAlt('');
-    largeImageSrc('');
-    largeImageId('');
+    largeImage('', '', '');
+
 };
 const clickArrowLeft = (event) => {
     clickLeft(event)
